@@ -1,0 +1,10 @@
+﻿{
+  "profiles": {
+    "VA.NCCC.MPI.WorkerTcpListener": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
