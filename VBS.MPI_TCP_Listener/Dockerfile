@@ -3,6 +3,8 @@
 FROM mcr.microsoft.com/dotnet/runtime:3.1 AS base
 WORKDIR /app
 
+EXPOSE 13000/tcp
+
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
 COPY ["VBS.MPI_TCP_Listener/VBS.MPI_TCP_Listener.csproj", "VBS.MPI_TCP_Listener/"]
