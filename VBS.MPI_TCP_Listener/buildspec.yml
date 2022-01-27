@@ -1,0 +1,27 @@
+version: 0.2
+env:
+  exported-variables:
+    - IMAGE_REPO_NAME
+    - IMAGE_TAG
+phases:
+  install:
+    runtime-versions:
+      dotnet: 3.1
+      docker: 19
+  pre_build:
+    commands:
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7) 
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker Image...
+      - echo Tagging and pushing the Docker image...
+      - echo Logging into Amazon ECR...
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+      - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG -f ./VBS.Services.Docker/Dockerfile --build-arg $IMAGE_TAG .
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_NBR.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:latest
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_NBR.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - docker images
+      - docker push $AWS_ACCOUNT_NBR.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:latest
+      - docker push $AWS_ACCOUNT_NBR.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
