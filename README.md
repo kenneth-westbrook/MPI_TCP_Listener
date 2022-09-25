@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Since the VBS application is incoporating the ability to search for a patient via social security number.  MPI requires that once a patient has been looked up, then that patient must be stored so that any metadata about that patient can be updated.  This update is currently done by MPI sending a TCP packet to a specific IPV4 address and port number.
+Since the VBS application is incoporating the ability to search for a patient via social security number.  MPI requires that once a patient has been looked up, then that patient must be stored so that any metadata about that patient can be updated.  This update is currently done by MPI sending a TCP packet to a specific IPV4 address and port number..
 
 ## Test Data
 
